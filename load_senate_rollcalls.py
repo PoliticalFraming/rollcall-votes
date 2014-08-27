@@ -47,9 +47,22 @@ example:
 # 28.  Number of 8's in Roll Call  (Present -- some Congresses, also not used some Congresses)
 # 29.  Number of 9's in Roll Call  (Not Voting)
 
-
+# 3 - congress
+# 5 - ICPSR
+# 2 - state code
+# 1 blank
+# 1 - District  number (0 if senate)
+# 7 - state name
+# 1 blank
+# 3 - party code
+# 2 - occupancy code
+# 11 - lastname
+#rest is vector
 import csv
 import numpy as np
+from blessings import Terminal
+
+t = Terminal()
 
 with open('data/S01_112_codes.csv', 'r') as csvfile:
 	issue_coded_rollcalls_by_bill = csv.reader(csvfile)
@@ -58,7 +71,7 @@ with open('data/S01_112_codes.csv', 'r') as csvfile:
 		# example:
 		# ['112', '486', '486', '1', '1', '0', '3', '0', '1', '1', '2013', '89', '6', '0', '2', '89', '6', '0', '2', '2', '90', '0', '0', '0', '0', '8', '0', '0', '3', 'EXTEND BUSH TAX CUTS BELOW $450K (PASS)']
 		bill_sum_votes.append(row)
-	bill_sum_votes = np.matrix(bill_sum_votes)		
+	bill_sum_votes = np.array(bill_sum_votes)		
 
 with open('data/s112desc.csv', 'r') as csvfile:
 	senate_rollcall_descriptions_112 = csv.reader(csvfile)
@@ -72,7 +85,21 @@ with open('data/sen112kh.ord', 'r') as ordfile:
 	for row in rollcalls:
 		rollcall_votes.append([int(c) for c in row[-487:].replace('\r','')])
 	rollcall_votes = rollcall_votes[:-1] # remove trailing empty array
-	rollcall_votes = np.matrix(rollcall_votes)
+	rollcall_votes = np.array(rollcall_votes)
 
+print t.yellow("rollcall_votes")
+print rollcall_votes
+print t.yellow("bill_sum_votes")
 print bill_sum_votes
+print ""
+
+print t.yellow("Checking for alignment")
+print "First column of rollcall votes (103 items)"
+first_column = rollcall_votes[:, 0]
+
+yeas = (first_column == 1).sum()
+print "yeas: %s" % yeas
+nays = (first_column == 6).sum()
+print "nays: %s" % nays
+
 
