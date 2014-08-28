@@ -1,7 +1,7 @@
 library('foreign')
 library('ggplot2')
 
-data.dir <- file.path("data", "dta")
+data.dir <- file.path("data", "issue_dta")
 data.files <- list.files(data.dir)
 
 data.files

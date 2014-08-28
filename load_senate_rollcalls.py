@@ -67,6 +67,7 @@ import csv
 import numpy as np
 from blessings import Terminal
 import rpy2.robjects as robjects
+from rpy2.rinterface import RRuntimeError
 import ipdb
 import ipdb as pdb
 
@@ -103,32 +104,47 @@ issue_codes = {
 robjects.r("require(foreign)")
 
 for congress_number in range(102, 112+1):
+	if congress_number == 106: continue
+	if congress_number == 107: continue
+	if congress_number == 109: continue
 	congress_number = str(congress_number)
 
 	x = robjects.r('x=read.dta("data/dta/sen%skh.dta")' % congress_number)
-	# pdb.set_trace()
-	with open('data/ord/sen%skh.ord' % congress_number, 'r') as ordfile:
-		rollcalls = ordfile.read().split('\n')
-		rollcall_votes = []
-		for row in rollcalls:
-			rollcall_votes.append([int(c) for c in row[-487:].replace('\r','')])
-		rollcall_votes = rollcall_votes[:-1] # remove trailing empty array
-		rollcall_votes = np.array(rollcall_votes)
+	non_vote_columns = [ name for name in x.colnames if "V" not in name]
+	if len(non_vote_columns) != 9:
+		print non_vote_columns
+		raise Exception("error in " + congress_number + ", found less than 9 columns")
+	non_vote_colnames = ", ".join(map(lambda name: "\"%s\"" % name, non_vote_columns))
 
 	for issue, issue_code in issue_codes.items():
 		issue_code = str(issue_code)
 
-		x = filter(lambda tuple:
+		x2 = filter(lambda tuple:
 					((tuple[1][7-1] == issue_code)
 					or (tuple[1][8-1] == issue_code))
 					and (tuple[1][0] == congress_number),
 				enumerate(bill_sum_votes))
 
-		absolute_positions = map(lambda tuple: tuple[0], x) # absolute position of vote in issue coded vote file
-		sum_votes_vectors = map(lambda tuple: tuple[1], x) # vote in issue coded vote file
-		vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
+		absolute_positions = map(lambda tuple: tuple[0], x2) # absolute position of vote in issue coded vote file
+		sum_votes_vectors = map(lambda tuple: tuple[1], x2) # vote in issue coded vote file
+		vote_indexes = map (lambda v: int(v[1]), sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
 
-		robjects.r('write.dta(x,"data/issue_dta/sen%s_%s_kh.dta")' % (congress_number, issue))
+		vote_columns = map(lambda index: "\"V" + str(index) + "\"", vote_indexes)
+		vote_colnames = ", ".join(vote_columns)
 
-		# if issue == "abortion":
-			# print issue + "_senate_" + congress_number + " = " + "c(" + ", ".join(map(lambda index: "\"V" + str(index) + "\"", vote_indexes)) + ")"
+		if vote_columns:
+			keep_colnames = non_vote_colnames + ", " + vote_colnames
+		else:
+			continue
+
+		print congress_number
+		print x.colnames
+		y = robjects.r('y=x[,c(%s)]' % (keep_colnames) )
+		print y.colnames
+		robjects.r('write.dta(y,"data/issue_dta/sen%s_%s_kh.dta")' % (congress_number, issue))
+
+		# reset y (dataframe per issue within congress)
+		robjects.r('y=NULL')
+
+	# reset x ( dataframe per congress)
+	robjects.r('x=NULL')
