@@ -1,6 +1,7 @@
 library('foreign')
 library('ggplot2')
 
+setwd("rollcall-votes/")
 data.dir <- file.path("data", "dta")
 data.files <- list.files(data.dir)
 
@@ -15,7 +16,7 @@ rollcall.data <- lapply(data.files,
                         })
 
 # Ninth code snippet
-dim(rollcall.data[[1]])
+# dim(rollcall.data[[1]])
 #[1] 103 647
 
 head(rollcall.data[[1]])
@@ -101,9 +102,9 @@ base.110 <- ggplot(cong.110, aes(x = x, y = y)) +
   ylab("") +
   scale_shape(name = "Party", breaks = c("100", "200", "328"),
               labels = c("Dem.", "Rep.", "Ind."), solid = FALSE) +
-  scale_color_manual(name = "Party", values = c("100" = "black",
-                                                "200" = "dimgray",
-                                                "328"="grey"),
+  scale_color_manual(name = "Party", values = c("100" = "blue",
+                                                "200" = "red",
+                                                "328"="green"),
                      breaks = c("100", "200", "328"),
                      labels = c("Dem.", "Rep.", "Ind."))
 
@@ -115,14 +116,19 @@ print(base.110 + geom_text(aes(color = party,
                                label = cong.110$name,
                                size = 2)))
 
+ggsave(filename="figures/base110.pdf")
+
 # Fourteenth code snippet
 # Create a single visualization of MDS for all Congresses on a grid
 all.mds <- do.call(rbind, rollcall.mds)
 all.plot <- ggplot(all.mds, aes(x = x, y = y)) +
-  geom_point(aes(shape = party, alpha = 0.75, size = 2)) +
+  geom_point(aes(color = as.factor(party), alpha = 0.75, size = 2)) +
   scale_size(range = c(2, 2), guide = 'none') +
   scale_alpha(guide = 'none') +
   theme_bw() +
+  scale_color_manual(values = c("blue", "red", "green"), name = "Party",
+                     breaks = c("100", "200", "328"),
+                     labels = c("Dem.", "Rep.", "Ind.")) +
   theme(axis.ticks = element_blank(),
         axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -130,13 +136,11 @@ all.plot <- ggplot(all.mds, aes(x = x, y = y)) +
   ggtitle("Roll Call Vote MDS Clustering for U.S. Senate (101st - 111th Congress)") +
        xlab("") +
        ylab("") +
-       scale_shape(name = "Party",
-                   breaks = c("100", "200", "328"),
-                   labels = c("Dem.", "Rep.", "Ind."),
-                   solid = FALSE) +
       facet_wrap(~ congress)
 
 print(all.plot)
+ggsave(filename="figures/all.pdf")
+
 
 # This is the code omitted from the chapter.  This is used to create shnazy plots of everything!
 for(i in 1:length(rollcall.mds))
