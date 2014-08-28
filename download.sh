@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-cd data
+cd data/dta
 
 curl -O "ftp://voteview.com/wf1/sen102kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/sen103kh.dta" -# -w "%{filename_effective}\n"
@@ -25,6 +25,9 @@ curl -O "ftp://voteview.com/wf1/hou109kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/hou110kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/hou111kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/hou112kh.dta" -# -w "%{filename_effective}\n"
+
+cd -
+cd data/ord
 
 curl -O "ftp://voteview.com/dtaord/sen102kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/sen103kh.ord" -# -w "%{filename_effective}\n"
