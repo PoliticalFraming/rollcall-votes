@@ -93,13 +93,33 @@ print t.yellow("bill_sum_votes")
 print bill_sum_votes
 print ""
 
-print t.yellow("Checking for alignment")
-print "First column of rollcall votes (103 items)"
-first_column = rollcall_votes[:, 0]
+immigration_issue_code = '59'
+abortion_issue_code = '21'
+homosexuality_issue_code = '22'
+school_prayer_issue_code = '33'
+narcotics_issue_code = '81'
+firearms_issue_code = '82'
+war_on_terror_issue_code = '108'
 
-yeas = (first_column == 1).sum()
-print "yeas: %s" % yeas
-nays = (first_column == 6).sum()
-print "nays: %s" % nays
+issue_code = firearms_issue_code
+sum_votes_vectors = filter( lambda v: (v[7-1] == issue_code) or (v[8-1] == issue_code), bill_sum_votes )
+sum_votes_vectors = filter( lambda v: v[0] == '112', sum_votes_vectors)
+vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors)
+print vote_indexes
+
+
+
+
+import pdb; pdb.set_trace()
+
+
+
+# for vector in bill_sum_votes:
+# 	claussen_code = vector[3-1]
+# 	peltzman_code_one = vector[4-1]
+# 	peltzman_code_two =vector[5-1]
+# 	issue_code_one = vector[6-1]
+# 	issue_code_two =vector[7-1]
+
 
 
