@@ -124,4 +124,5 @@ for congress_number in range(102, 112+1):
 		sum_votes_vectors = map(lambda tuple: tuple[1], x) # vote in issue coded vote file
 		vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
 
-		print issue + "_" + congress_number + " = " + "c(" + ", ".join(map(lambda index: "\"V" + str(index) + "\"", vote_indexes)) + ")"
+		if issue == "abortion":
+			print issue + "_senate_" + congress_number + " = " + "c(" + ", ".join(map(lambda index: "\"V" + str(index) + "\"", vote_indexes)) + ")"

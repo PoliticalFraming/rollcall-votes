@@ -2,6 +2,7 @@
 
 cd data/dta
 
+curl -O "ftp://voteview.com/wf1/sen101kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/sen102kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/sen103kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/sen104kh.dta" -# -w "%{filename_effective}\n"
@@ -14,6 +15,7 @@ curl -O "ftp://voteview.com/wf1/sen110kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/sen111kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/sen112kh.dta" -# -w "%{filename_effective}\n"
 
+curl -O "ftp://voteview.com/wf1/hou101kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/hou102kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/hou103kh.dta" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/wf1/hou104kh.dta" -# -w "%{filename_effective}\n"
@@ -29,6 +31,7 @@ curl -O "ftp://voteview.com/wf1/hou112kh.dta" -# -w "%{filename_effective}\n"
 cd -
 cd data/ord
 
+curl -O "ftp://voteview.com/dtaord/sen101kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/sen102kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/sen103kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/sen104kh.ord" -# -w "%{filename_effective}\n"
@@ -41,6 +44,7 @@ curl -O "ftp://voteview.com/dtaord/sen110kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/sen111kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/sen112kh.ord" -# -w "%{filename_effective}\n"
 
+curl -O "ftp://voteview.com/dtaord/hou101kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/hou102kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/hou103kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/hou104kh.ord" -# -w "%{filename_effective}\n"
@@ -77,5 +81,14 @@ cd -
 cd data
 
 curl -O "ftp://voteview.com/junkord/S01_112_codes.TXT" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/junkord/H01_112_codes.TXT" -# -w "%{filename_effective}\n"
 
 cd -
+
+# https://github.com/kawadia/estrangement/blob/master/data/voteview/rollcall.py
+
+# for i in `seq 10 111`; do wget ftp://voteview.com/dtaord/sen${i}kh.ord ; done
+# for i in `seq 1 9`; do wget ftp://voteview.com/dtaord/sen0${i}kh.ord ; done
+
+# for i in `seq 10 111`; do wget ftp://voteview.com/dtaord/hou${i}kh.ord ; done
+# for i in `seq 1 9`; do wget ftp://voteview.com/dtaord/hou0${i}kh.ord ; done
