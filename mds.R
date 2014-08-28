@@ -1,6 +1,7 @@
 library('foreign')
 library('ggplot2')
 
+setwd("rollcall-votes/")
 data.dir <- file.path("data", "dta")
 data.files <- list.files(data.dir)
 
@@ -15,7 +16,7 @@ rollcall.data <- lapply(data.files,
                         })
 
 # Ninth code snippet
-dim(rollcall.data[[1]])
+# dim(rollcall.data[[1]])
 #[1] 103 647
 
 head(rollcall.data[[1]])
@@ -114,6 +115,8 @@ print(base.110 + geom_text(aes(color = party,
                                alpha = 0.75,
                                label = cong.110$name,
                                size = 2)))
+
+ggsave(filename="figures/base110.pdf")
 
 # Fourteenth code snippet
 # Create a single visualization of MDS for all Congresses on a grid
