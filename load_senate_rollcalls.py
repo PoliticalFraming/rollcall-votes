@@ -76,7 +76,7 @@ with open('data/S01_112_codes.csv', 'r') as csvfile:
 		# example:
 		# ['112', '486', '486', '1', '1', '0', '3', '0', '1', '1', '2013', '89', '6', '0', '2', '89', '6', '0', '2', '2', '90', '0', '0', '0', '0', '8', '0', '0', '3', 'EXTEND BUSH TAX CUTS BELOW $450K (PASS)']
 		bill_sum_votes.append(row)
-	bill_sum_votes = np.array(bill_sum_votes)		
+	bill_sum_votes = np.array(bill_sum_votes)
 
 with open('data/s112desc.csv', 'r') as csvfile:
 	senate_rollcall_descriptions_112 = csv.reader(csvfile)
@@ -96,30 +96,34 @@ print t.yellow("rollcall_votes")
 print rollcall_votes
 print t.yellow("bill_sum_votes")
 print bill_sum_votes
-print ""
 
-immigration_issue_code = '59'
-abortion_issue_code = '21'
-homosexuality_issue_code = '22'
-school_prayer_issue_code = '33'
-narcotics_issue_code = '81'
-firearms_issue_code = '82'
-war_on_terror_issue_code = '108'
+issue_codes = {
+	'immigration': 59,
+	'abortion': 21,
+	'homosexuality': 22,
+	'school_prayer': 33,
+	'narcotics': 81,
+	'firearms': 82,
+	'war_on_terror': 108
+}
 
-issue_code = firearms_issue_code
-congress_number = '112'
-sum_votes_vectors = filter( lambda v: (v[7-1] == issue_code) or (v[8-1] == issue_code), bill_sum_votes )
-sum_votes_vectors = filter( lambda v: v[0] == congress_number, sum_votes_vectors)
-vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors)
+for congress_number in range(102, 112+1):
+	congress_number = str(congress_number)
 
-x = filter(lambda tuple: (tuple[1][7-1] == issue_code) or (tuple[1][8-1] == issue_code), enumerate(bill_sum_votes))
+	for issue, issue_code in issue_codes.items():
+		issue_code = str(issue_code)
 
-absolute_positions = map(lambda tuple: tuple[0], x) # absolute position of vote in issue coded vote file
-sum_votes_vectors = map(lambda tuple: tuple[1], x) # vote in issue coded vote file
-vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
+		sum_votes_vectors = filter( lambda v: (v[7-1] == issue_code) or (v[8-1] == issue_code), bill_sum_votes )
+		sum_votes_vectors = filter( lambda v: v[0] == congress_number, sum_votes_vectors)
+		vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors)
 
-import pdb; pdb.set_trace()
+		x = filter(lambda tuple: (tuple[1][7-1] == issue_code) or (tuple[1][8-1] == issue_code), enumerate(bill_sum_votes))
 
+		absolute_positions = map(lambda tuple: tuple[0], x) # absolute position of vote in issue coded vote file
+		sum_votes_vectors = map(lambda tuple: tuple[1], x) # vote in issue coded vote file
+		vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
+
+		print issue + "_" + congress_number + " = " + "c(" + ", ".join(map(lambda index: "\"V" + str(index) + "\"", vote_indexes)) + ")"
 
 #### Junk for later
 # for vector in bill_sum_votes:

@@ -8,3 +8,7 @@ Scripts to read rollcall votes from  www.voteview.com/downloads.asp
 Rscript mds.R
 python load_senate_rollcalls.py
 ```
+
+```
+open -a RStudio .
+```

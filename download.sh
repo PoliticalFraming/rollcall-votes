@@ -54,3 +54,23 @@ curl -O "ftp://voteview.com/dtaord/hou111kh.ord" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtaord/hou112kh.ord" -# -w "%{filename_effective}\n"
 
 cd -
+cd data/desc
+
+curl -O "ftp://voteview.com/Senate107_dictionary.txt" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/Senate108_dictionary.txt" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/s109desc_final.csv" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/s110desc_December_2008.csv" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/s111desc_2010.csv" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/s112desc.csv" -# -w "%{filename_effective}\n"
+
+cd -
+cd data/dtl
+
+curl -O "ftp://voteview.com/dtl/101s.dtl" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtl/102s.dtl" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtl/103s.dtl" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtl/104s.dtl" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtl/105s.dtl" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtl/106s.dtl" -# -w "%{filename_effective}\n"
+
+cd -
