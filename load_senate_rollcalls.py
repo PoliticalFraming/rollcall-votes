@@ -84,7 +84,7 @@ with open('data/s112desc.csv', 'r') as csvfile:
 	for row in senate_rollcall_descriptions_112:
 		pass
 
-with open('data/sen112kh.ord', 'r') as ordfile:
+with open('data/ord/sen112kh.ord', 'r') as ordfile:
 	rollcalls = ordfile.read().split('\n')
 	rollcall_votes = []
 	for row in rollcalls:
@@ -111,9 +111,14 @@ congress_number = '112'
 sum_votes_vectors = filter( lambda v: (v[7-1] == issue_code) or (v[8-1] == issue_code), bill_sum_votes )
 sum_votes_vectors = filter( lambda v: v[0] == congress_number, sum_votes_vectors)
 vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors)
-print vote_indexes
 
-# import pdb; pdb.set_trace()
+x = filter(lambda tuple: (tuple[1][7-1] == issue_code) or (tuple[1][8-1] == issue_code), enumerate(bill_sum_votes))
+
+absolute_positions = map(lambda tuple: tuple[0], x) # absolute position of vote in issue coded vote file
+sum_votes_vectors = map(lambda tuple: tuple[1], x) # vote in issue coded vote file
+vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
+
+import pdb; pdb.set_trace()
 
 
 #### Junk for later
