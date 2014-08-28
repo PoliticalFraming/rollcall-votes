@@ -1,7 +1,6 @@
 library('foreign')
 library('ggplot2')
 
-# setwd("rollcall-votes/")
 data.dir <- file.path("data", "dta")
 data.files <- list.files(data.dir)
 

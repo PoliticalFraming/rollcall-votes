@@ -66,15 +66,16 @@ http://voteview.com/dw-nominate_textfile.htm
 import csv
 import numpy as np
 from blessings import Terminal
+import rpy2.robjects as robjects
+import ipdb
+import ipdb as pdb
 
 t = Terminal()
 
-with open('data/S01_112_codes.csv', 'r') as csvfile:
+with open('data/S01_112_codes.TXT', 'r') as csvfile:
 	issue_coded_rollcalls_by_bill = csv.reader(csvfile)
 	bill_sum_votes = []
 	for row in issue_coded_rollcalls_by_bill:
-		# example:
-		# ['112', '486', '486', '1', '1', '0', '3', '0', '1', '1', '2013', '89', '6', '0', '2', '89', '6', '0', '2', '2', '90', '0', '0', '0', '0', '8', '0', '0', '3', 'EXTEND BUSH TAX CUTS BELOW $450K (PASS)']
 		bill_sum_votes.append(row)
 	bill_sum_votes = np.array(bill_sum_votes)
 
@@ -83,7 +84,6 @@ with open('data/S01_112_codes.csv', 'r') as csvfile:
 # 	header = senate_rollcall_descriptions_112.next()
 # 	for row in senate_rollcall_descriptions_112:
 # 		pass
-
 
 # print t.yellow("rollcall_votes")
 # print rollcall_votes
@@ -100,9 +100,13 @@ issue_codes = {
 	'war_on_terror': 108
 }
 
+robjects.r("require(foreign)")
+
 for congress_number in range(102, 112+1):
 	congress_number = str(congress_number)
 
+	x = robjects.r('x=read.dta("data/dta/sen%skh.dta")' % congress_number)
+	# pdb.set_trace()
 	with open('data/ord/sen%skh.ord' % congress_number, 'r') as ordfile:
 		rollcalls = ordfile.read().split('\n')
 		rollcall_votes = []
@@ -124,5 +128,7 @@ for congress_number in range(102, 112+1):
 		sum_votes_vectors = map(lambda tuple: tuple[1], x) # vote in issue coded vote file
 		vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
 
-		if issue == "abortion":
-			print issue + "_senate_" + congress_number + " = " + "c(" + ", ".join(map(lambda index: "\"V" + str(index) + "\"", vote_indexes)) + ")"
+		robjects.r('write.dta(x,"data/issue_dta/sen%s_%s_kh.dta")' % (congress_number, issue))
+
+		# if issue == "abortion":
+			# print issue + "_senate_" + congress_number + " = " + "c(" + ", ".join(map(lambda index: "\"V" + str(index) + "\"", vote_indexes)) + ")"
