@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+
+cd data
+
+curl -O "ftp://voteview.com/wf1/sen102kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen103kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen104kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen105kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen106kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen107kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen108kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen109kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen110kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen111kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/sen112kh.dta" -# -w "%{filename_effective}\n"
+
+curl -O "ftp://voteview.com/wf1/hou102kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou103kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou104kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou105kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou106kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou107kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou108kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou109kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou110kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou111kh.dta" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/wf1/hou112kh.dta" -# -w "%{filename_effective}\n"
+
+curl -O "ftp://voteview.com/dtaord/sen102kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen103kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen104kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen105kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen106kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen107kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen108kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen109kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen110kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen111kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/sen112kh.ord" -# -w "%{filename_effective}\n"
+
+curl -O "ftp://voteview.com/dtaord/hou102kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou103kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou104kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou105kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou106kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou107kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou108kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou109kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou110kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou111kh.ord" -# -w "%{filename_effective}\n"
+curl -O "ftp://voteview.com/dtaord/hou112kh.ord" -# -w "%{filename_effective}\n"
+
+cd -
