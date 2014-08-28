@@ -74,3 +74,8 @@ curl -O "ftp://voteview.com/dtl/105s.dtl" -# -w "%{filename_effective}\n"
 curl -O "ftp://voteview.com/dtl/106s.dtl" -# -w "%{filename_effective}\n"
 
 cd -
+cd data
+
+curl -O "ftp://voteview.com/junkord/S01_112_codes.TXT" -# -w "%{filename_effective}\n"
+
+cd -

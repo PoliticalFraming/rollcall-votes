@@ -78,24 +78,17 @@ with open('data/S01_112_codes.csv', 'r') as csvfile:
 		bill_sum_votes.append(row)
 	bill_sum_votes = np.array(bill_sum_votes)
 
-with open('data/s112desc.csv', 'r') as csvfile:
-	senate_rollcall_descriptions_112 = csv.reader(csvfile)
-	header = senate_rollcall_descriptions_112.next()
-	for row in senate_rollcall_descriptions_112:
-		pass
+# with open('data/desc/s112desc.csv', 'r') as csvfile:
+# 	senate_rollcall_descriptions_112 = csv.reader(csvfile)
+# 	header = senate_rollcall_descriptions_112.next()
+# 	for row in senate_rollcall_descriptions_112:
+# 		pass
 
-with open('data/ord/sen112kh.ord', 'r') as ordfile:
-	rollcalls = ordfile.read().split('\n')
-	rollcall_votes = []
-	for row in rollcalls:
-		rollcall_votes.append([int(c) for c in row[-487:].replace('\r','')])
-	rollcall_votes = rollcall_votes[:-1] # remove trailing empty array
-	rollcall_votes = np.array(rollcall_votes)
 
-print t.yellow("rollcall_votes")
-print rollcall_votes
-print t.yellow("bill_sum_votes")
-print bill_sum_votes
+# print t.yellow("rollcall_votes")
+# print rollcall_votes
+# print t.yellow("bill_sum_votes")
+# print bill_sum_votes
 
 issue_codes = {
 	'immigration': 59,
@@ -110,28 +103,25 @@ issue_codes = {
 for congress_number in range(102, 112+1):
 	congress_number = str(congress_number)
 
+	with open('data/ord/sen%skh.ord' % congress_number, 'r') as ordfile:
+		rollcalls = ordfile.read().split('\n')
+		rollcall_votes = []
+		for row in rollcalls:
+			rollcall_votes.append([int(c) for c in row[-487:].replace('\r','')])
+		rollcall_votes = rollcall_votes[:-1] # remove trailing empty array
+		rollcall_votes = np.array(rollcall_votes)
+
 	for issue, issue_code in issue_codes.items():
 		issue_code = str(issue_code)
 
-		sum_votes_vectors = filter( lambda v: (v[7-1] == issue_code) or (v[8-1] == issue_code), bill_sum_votes )
-		sum_votes_vectors = filter( lambda v: v[0] == congress_number, sum_votes_vectors)
-		vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors)
-
-		x = filter(lambda tuple: (tuple[1][7-1] == issue_code) or (tuple[1][8-1] == issue_code), enumerate(bill_sum_votes))
+		x = filter(lambda tuple:
+					((tuple[1][7-1] == issue_code)
+					or (tuple[1][8-1] == issue_code))
+					and (tuple[1][0] == congress_number),
+				enumerate(bill_sum_votes))
 
 		absolute_positions = map(lambda tuple: tuple[0], x) # absolute position of vote in issue coded vote file
 		sum_votes_vectors = map(lambda tuple: tuple[1], x) # vote in issue coded vote file
 		vote_indexes = map (lambda v: int(v[1]) - 1, sum_votes_vectors) # index of relevant votes in vote vector for 112th congress
 
 		print issue + "_" + congress_number + " = " + "c(" + ", ".join(map(lambda index: "\"V" + str(index) + "\"", vote_indexes)) + ")"
-
-#### Junk for later
-# for vector in bill_sum_votes:
-# 	claussen_code = vector[3-1]
-# 	peltzman_code_one = vector[4-1]
-# 	peltzman_code_two =vector[5-1]
-# 	issue_code_one = vector[6-1]
-# 	issue_code_two =vector[7-1]
-
-
-
